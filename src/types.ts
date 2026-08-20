@@ -34,3 +34,8 @@ export interface OutfitEntry {
   photoDataUrl?: string
   createdAt: string
 }
+
+export interface ReminderSettings {
+  enabled: boolean
+  times: string[] // "HH:MM", 24h
+}

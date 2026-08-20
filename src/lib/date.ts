@@ -41,3 +41,17 @@ export function last7Days(): string[] {
   for (let i = 6; i >= 0; i--) out.push(addDays(today, -i))
   return out
 }
+
+export function startOfWeekISO(iso: string): string {
+  return addDays(iso, -isoWeekday(iso))
+}
+
+export function weekDates(iso: string): string[] {
+  const start = startOfWeekISO(iso)
+  return Array.from({ length: 7 }, (_, i) => addDays(start, i))
+}
+
+export function nowHHMM(): string {
+  const d = new Date()
+  return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`
+}

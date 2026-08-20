@@ -1,8 +1,8 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import type { Completions, Habit, OutfitEntry, CategoryId } from '../types'
+import type { Completions, Habit, OutfitEntry, CategoryId, ReminderSettings } from '../types'
 import { DEFAULT_HABITS } from '../data/categories'
-import { addDays, todayISO } from '../lib/date'
+import { addDays, todayISO, weekDates } from '../lib/date'
 
 function uid(): string {
   return Math.random().toString(36).slice(2, 10) + Date.now().toString(36)
@@ -12,6 +12,8 @@ interface State {
   habits: Habit[]
   completions: Completions
   outfits: OutfitEntry[]
+  reminders: ReminderSettings
+  reminderLastFired: Record<string, string>
 
   addHabit: (name: string, category: CategoryId, targetDaysPerWeek?: number) => void
   updateHabit: (id: string, patch: Partial<Habit>) => void
@@ -26,6 +28,12 @@ interface State {
 
   currentStreak: (habitId: string) => number
   bestStreak: (habitId: string) => number
+  weeklyCompleted: (habitId: string, dateISO?: string) => number
+
+  setRemindersEnabled: (enabled: boolean) => void
+  addReminderTime: (time: string) => void
+  removeReminderTime: (time: string) => void
+  markReminderFired: (time: string, dateISO: string) => void
 }
 
 export const useStore = create<State>()(
@@ -41,6 +49,8 @@ export const useStore = create<State>()(
       })),
       completions: {},
       outfits: [],
+      reminders: { enabled: false, times: ['09:00', '20:00'] },
+      reminderLastFired: {},
 
       addHabit: (name, category, targetDaysPerWeek = 7) =>
         set((s) => ({
@@ -125,6 +135,30 @@ export const useStore = create<State>()(
         }
         return best
       },
+
+      weeklyCompleted: (habitId, dateISO = todayISO()) => {
+        const log = get().completions[habitId] ?? {}
+        return weekDates(dateISO).filter((d) => log[d]).length
+      },
+
+      setRemindersEnabled: (enabled) =>
+        set((s) => ({ reminders: { ...s.reminders, enabled } })),
+
+      addReminderTime: (time) =>
+        set((s) => {
+          if (s.reminders.times.includes(time)) return s
+          return {
+            reminders: { ...s.reminders, times: [...s.reminders.times, time].sort() },
+          }
+        }),
+
+      removeReminderTime: (time) =>
+        set((s) => ({
+          reminders: { ...s.reminders, times: s.reminders.times.filter((t) => t !== time) },
+        })),
+
+      markReminderFired: (time, dateISO) =>
+        set((s) => ({ reminderLastFired: { ...s.reminderLastFired, [time]: dateISO } })),
     }),
     { name: 'sparkagain-storage' }
   )

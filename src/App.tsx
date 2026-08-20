@@ -5,9 +5,11 @@ import { History } from './components/History'
 import { Stats } from './components/Stats'
 import { Outfits } from './components/Outfits'
 import { Manage } from './components/Manage'
+import { useReminderScheduler } from './hooks/useReminderScheduler'
 
 export default function App() {
   const [tab, setTab] = useState<Tab>('today')
+  useReminderScheduler()
 
   return (
     <div className="min-h-screen">

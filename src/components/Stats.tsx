@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { Flame, Trophy } from 'lucide-react'
+import { CheckCircle2, Flame, Target, Trophy } from 'lucide-react'
 import { useStore } from '../store/useStore'
 import { CATEGORIES } from '../data/categories'
 import { CATEGORY_STYLES } from '../data/categoryStyles'
@@ -12,6 +12,8 @@ export function Stats() {
   const completions = useStore((s) => s.completions)
   const currentStreak = useStore((s) => s.currentStreak)
   const bestStreak = useStore((s) => s.bestStreak)
+  const weeklyCompleted = useStore((s) => s.weeklyCompleted)
+  const weeklyHabits = habits.filter((h) => h.targetDaysPerWeek < 7)
 
   const days = last7Days()
   const totalPossible = habits.length * days.length
@@ -96,6 +98,43 @@ export function Stats() {
           )
         })}
       </div>
+
+      {weeklyHabits.length > 0 && (
+        <>
+          <h2 className="mb-3 mt-6 flex items-center gap-1 text-sm font-semibold uppercase tracking-wide text-neutral-500">
+            <Target size={14} /> Weekly goals
+          </h2>
+          <div className="space-y-2">
+            {weeklyHabits.map((h) => {
+              const count = weeklyCompleted(h.id)
+              const met = count >= h.targetDaysPerWeek
+              const style = CATEGORY_STYLES[h.category]
+              return (
+                <div
+                  key={h.id}
+                  className="rounded-xl border border-black/10 bg-white p-3 dark:border-white/10 dark:bg-neutral-900"
+                >
+                  <div className="mb-1.5 flex items-center justify-between text-sm">
+                    <span className="flex items-center gap-1.5 font-medium text-neutral-800 dark:text-neutral-200">
+                      {met && <CheckCircle2 size={14} className="text-emerald-500" />}
+                      {h.name}
+                    </span>
+                    <span className="text-neutral-500">
+                      {count}/{h.targetDaysPerWeek}
+                    </span>
+                  </div>
+                  <div className="h-2 w-full overflow-hidden rounded-full bg-neutral-100 dark:bg-neutral-800">
+                    <div
+                      className={`h-full rounded-full ${met ? 'bg-emerald-500' : style.bg}`}
+                      style={{ width: `${Math.min(100, (count / h.targetDaysPerWeek) * 100)}%` }}
+                    />
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </>
+      )}
 
       <h2 className="mb-3 mt-6 flex items-center gap-1 text-sm font-semibold uppercase tracking-wide text-neutral-500">
         <Trophy size={14} /> All-time best streaks
