@@ -8,3 +8,11 @@ createRoot(document.getElementById('root')!).render(
     <App />
   </StrictMode>,
 )
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    // Relative path so it resolves under whatever subpath the app is served
+    // from (e.g. GitHub Pages' /<repo-name>/), matching the manifest scope.
+    navigator.serviceWorker.register('sw.js').catch(() => {})
+  })
+}
