@@ -19,12 +19,25 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
 
+      # Sparkagain (habit tracker) — published at the site root.
       - run: npm ci
       - run: npm run build
+
+      # ChoreStars (family chores) — published at /chorestars/, alongside it.
+      - run: npm ci
+        working-directory: chorestars
+      - run: npm run build
+        working-directory: chorestars
+
+      - name: Combine both apps into one publish folder
+        run: |
+          rm -rf site
+          mkdir -p site/chorestars
+          cp -r dist/. site/
+          cp -r chorestars/dist/. site/chorestars/
 
       - uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./site
