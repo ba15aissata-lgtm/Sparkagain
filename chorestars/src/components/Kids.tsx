@@ -30,10 +30,11 @@ export function Kids() {
 
   return (
     <div className="mx-auto max-w-xl px-4 pb-28 pt-6">
-      <h1 className="mb-6 text-2xl font-semibold text-neutral-900 dark:text-white">Kids</h1>
+      <h1 className="mb-1 text-2xl font-semibold text-neutral-900 dark:text-white">People</h1>
+      <p className="mb-6 text-sm text-neutral-500">Add each kid — and add yourself too, if you want your own chores tracked here.</p>
 
       <div className="mb-6 rounded-2xl border border-black/10 bg-white p-4 dark:border-white/10 dark:bg-neutral-900">
-        <label className="mb-1 block text-xs font-medium text-neutral-500">Add a kid</label>
+        <label className="mb-1 block text-xs font-medium text-neutral-500">Add a person</label>
         <div className="mb-3 flex gap-2">
           <input
             value={name}
@@ -83,13 +84,13 @@ export function Kids() {
           disabled={!name.trim()}
           className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-amber-500 py-2.5 text-sm font-semibold text-white disabled:opacity-40"
         >
-          <Plus size={16} /> Add kid
+          <Plus size={16} /> Add person
         </button>
       </div>
 
       <div className="mb-3 flex items-center justify-between">
         <h2 className="text-sm font-semibold uppercase tracking-wide text-neutral-500">
-          {showArchived ? 'Archived' : 'Active'} kids
+          {showArchived ? 'Archived' : 'Active'}
         </h2>
         <button
           onClick={() => setShowArchived((v) => !v)}
@@ -137,7 +138,7 @@ export function Kids() {
         })}
         {visibleKids.length === 0 && (
           <p className="py-6 text-center text-sm text-neutral-500">
-            {showArchived ? 'No archived kids.' : 'No kids yet.'}
+            {showArchived ? 'No one archived.' : 'No one added yet.'}
           </p>
         )}
       </div>

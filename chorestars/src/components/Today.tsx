@@ -51,7 +51,7 @@ export function Today() {
 
       {kids.length === 0 && (
         <p className="mt-10 text-center text-sm text-neutral-500">
-          No kids yet. Add one in the Kids tab.
+          No one yet. Add a kid — or yourself — in the People tab.
         </p>
       )}
 

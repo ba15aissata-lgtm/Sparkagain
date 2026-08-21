@@ -5,7 +5,7 @@ export type Tab = 'today' | 'chores' | 'kids' | 'rewards' | 'history'
 const TABS: { id: Tab; label: string; icon: React.ComponentType<{ size?: number }> }[] = [
   { id: 'today', label: 'Today', icon: ListChecks },
   { id: 'chores', label: 'Chores', icon: CheckSquare },
-  { id: 'kids', label: 'Kids', icon: Users },
+  { id: 'kids', label: 'People', icon: Users },
   { id: 'rewards', label: 'Rewards', icon: Gift },
   { id: 'history', label: 'History', icon: HistoryIcon },
 ]

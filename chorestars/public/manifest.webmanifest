@@ -1,7 +1,7 @@
 {
   "name": "ChoreStars — Family Chores",
   "short_name": "ChoreStars",
-  "description": "The house manager app: organize kids' chores like cooking, cleaning, and dog care, and reward them with stars they can redeem.",
+  "description": "The house manager app: organize chores for the whole family — kids and grown-ups — and reward them with stars they can redeem.",
   "start_url": ".",
   "scope": ".",
   "display": "standalone",

@@ -1,7 +1,9 @@
 # ChoreStars
 
-The house manager app — organize kids' chores (cooking, cleaning, dog care,
-and more), and reward them with stars they can redeem for real perks.
+The house manager app — organize chores for the whole family (cooking,
+cleaning, dog care, and more), and reward them with stars they can redeem
+for real perks. Add kids, or add yourself — anyone in the house can have
+their own chores tracked here.
 
 ## Features
 

@@ -81,4 +81,5 @@ export const KID_COLOR_STYLES: Record<KidColorId, KidColorStyle> = {
 
 export const KID_EMOJI_OPTIONS = [
   '🧒', '👦', '👧', '🦸', '🦸‍♀️', '🦄', '🐯', '🐱', '🐶', '⚽', '🎨', '🚀',
+  '👩', '👨', '🧑', '👩‍🍳', '🧑‍🍳', '😎',
 ]

@@ -153,7 +153,7 @@ export function Chores() {
               </button>
             ))}
             {activeKids.length === 0 && (
-              <span className="text-xs text-neutral-400">Add a kid in the Kids tab first.</span>
+              <span className="text-xs text-neutral-400">Add a person in the People tab first.</span>
             )}
           </div>
         </div>
