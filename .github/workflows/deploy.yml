@@ -30,12 +30,19 @@ jobs:
       - run: npm run build
         working-directory: chorestars
 
-      - name: Combine both apps into one publish folder
+      # Défis (personal challenge tracker) — published at /defis/.
+      - run: npm ci
+        working-directory: defis
+      - run: npm run build
+        working-directory: defis
+
+      - name: Combine all apps into one publish folder
         run: |
           rm -rf site
-          mkdir -p site/chorestars
+          mkdir -p site/chorestars site/defis
           cp -r dist/. site/
           cp -r chorestars/dist/. site/chorestars/
+          cp -r defis/dist/. site/defis/
 
       - uses: peaceiris/actions-gh-pages@v4
         with:
